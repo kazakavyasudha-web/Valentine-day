@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For You ❤️</title>
+
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:sans-serif;
+background:linear-gradient(135deg,#ff9ecb,#ffc3e6);
+overflow:hidden;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:20px;
+width:90%;
+max-width:350px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+button{
+padding:10px 20px;
+margin:8px;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.yes{
+background:#ff4d8d;
+color:white;
+}
+
+.no{
+background:#ddd;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="box">
+<h2>Ready for a few questions? 😄</h2>
+<button onclick="next()">Start ❤️</button>
+</div>
+
+<script>
+let step=0;
+
+function next(){
+step++;
+
+if(step==1){
+box.innerHTML=`<h2>Miss me sometimes? 🥺</h2>
+<button onclick="next()">Yes</button>
+<button onclick="next()">Always</button>`;
+}
+
+else if(step==2){
+box.innerHTML=`<h2>Chocolate or me? 😏</h2>
+<button onclick="next()">You</button>
+<button onclick="next()">Obviously you</button>`;
+}
+
+else{
+box.innerHTML=`<h2>Will you be my Valentine? 💖</h2>
+<button class="yes" onclick="yes()">YES ❤️</button>
+<button class="no" id="no">NO</button>`;
+
+let no=document.getElementById("no");
+
+no.addEventListener("touchstart",move);
+no.addEventListener("mouseover",move);
+
+function move(){
+no.style.position="absolute";
+no.style.top=Math.random()*80+"%";
+no.style.left=Math.random()*80+"%";
+}
+}
+}
+
+function yes(){
+box.innerHTML="<h2>YAYYYY 🥰💞<br>You just made my day!</h2>";
+}
+</script>
+
+</body>
+</html>

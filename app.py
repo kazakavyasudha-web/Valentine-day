@@ -1,73 +1,76 @@
 import streamlit as st
 
-# ---------------------------------
-# Page Config
-# ---------------------------------
-st.set_page_config(page_title="For You ❤️", layout="centered")
+# -------------------------------------------------
+# Page config
+# -------------------------------------------------
+st.set_page_config(
+    page_title="For You ❤️",
+    layout="centered"
+)
 
-# ---------------------------------
-# Pink Cute Styling
-# ---------------------------------
+# -------------------------------------------------
+# Pastel Cute Styling (clean + stable)
+# -------------------------------------------------
 st.markdown("""
 <style>
 
+/* background */
 .stApp {
-    background: linear-gradient(135deg,#ffd6e8,#ffc2dc,#ff9ecb);
+    background: linear-gradient(135deg,#fff5f9,#ffe6f0,#ffd6e8);
 }
 
-/* center everything */
-.main {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    height:100vh;
+/* hide top padding */
+.block-container {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
 }
 
-/* cute card */
+/* center card */
 .card {
-    background:white;
-    padding:40px 25px;
-    border-radius:25px;
-    width:90%;
-    max-width:380px;
-    text-align:center;
-    box-shadow:0 15px 40px rgba(0,0,0,0.15);
+    max-width: 380px;
+    margin: auto;
+    background: white;
+    padding: 35px 25px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 /* question text */
-.question {
-    font-size:22px;
-    font-weight:600;
-    margin-bottom:25px;
-    color:#ff4d8d;
+.qtext {
+    font-size: 21px;
+    font-weight: 600;
+    color: #ff4d8d;
+    margin-bottom: 25px;
+    line-height: 1.4;
 }
 
 /* buttons */
-.stButton>button {
-    width:100%;
-    border-radius:14px;
-    padding:12px 0;
-    font-size:16px;
-    font-weight:600;
-    background:#ff4d8d;
-    color:white;
-    border:none;
-    margin:6px 0;
+.stButton > button {
+    width: 100%;
+    border-radius: 14px;
+    padding: 12px 0;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    margin: 6px 0;
+    background: #ff7aa8;
+    color: white;
 }
 
-/* lighter pink for secondary */
-.secondary button {
-    background:#ffc2dc !important;
-    color:#333 !important;
+/* soft secondary */
+.soft button {
+    background: #ffd6e8 !important;
+    color: #444 !important;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
 
-# ---------------------------------
+# -------------------------------------------------
 # Session State
-# ---------------------------------
+# -------------------------------------------------
 if "step" not in st.session_state:
     st.session_state.step = 0
 
@@ -79,55 +82,61 @@ def next_step():
     st.session_state.step += 1
 
 
-# ---------------------------------
-# Center wrapper
-# ---------------------------------
+# -------------------------------------------------
+# Card start
+# -------------------------------------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
 
-# ---------------------------------
-# Steps Flow
-# ---------------------------------
+# -------------------------------------------------
+# FLOW
+# -------------------------------------------------
 
-# Intro
+# Step 0
 if st.session_state.step == 0:
-    st.markdown('<div class="question">Ready for a tiny quiz about us? 😄</div>', unsafe_allow_html=True)
+    st.markdown('<div class="qtext">Ready for a tiny quiz about us? 😄</div>', unsafe_allow_html=True)
     st.button("Start ❤️", on_click=next_step)
 
 
-# Question 1 (your custom)
+# Step 1
 elif st.session_state.step == 1:
-    st.markdown('<div class="question">Who’s your favorite person right now? 😏</div>', unsafe_allow_html=True)
+    st.markdown('<div class="qtext">Who’s your favorite person right now? 😏</div>', unsafe_allow_html=True)
     st.button("You", on_click=next_step)
     st.button("Only you", on_click=next_step)
 
 
-# Question 2 (your custom)
+# Step 2 (chocolate question added)
 elif st.session_state.step == 2:
-    st.markdown('<div class="question">Can I keep you forever? 🥺</div>', unsafe_allow_html=True)
+    st.markdown('<div class="qtext">Chocolate or me? 🍫😌</div>', unsafe_allow_html=True)
+    st.button("You", on_click=next_step)
+    st.button("Obviously you", on_click=next_step)
+
+
+# Step 3
+elif st.session_state.step == 3:
+    st.markdown('<div class="qtext">Can I keep you forever? 🥺</div>', unsafe_allow_html=True)
     st.button("Yes", on_click=next_step)
     st.button("Definitely yes", on_click=next_step)
 
 
-# Final proposal
+# Final
 else:
 
-    if st.session_state.dramatic:
-        question_text = "Will you be my Valentine or should I cry dramatically? 🥺"
-    else:
-        question_text = "Will you be my Valentine? 💖"
+    question = (
+        "Will you be my Valentine or should I cry dramatically? 🥺"
+        if st.session_state.dramatic
+        else "Will you be my Valentine? 💖"
+    )
 
-    st.markdown(f'<div class="question">{question_text}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="qtext">{question}</div>', unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
 
-    # YES
     with col1:
         if st.button("YES ❤️"):
             st.balloons()
             st.success("YAYYYY 🥰💞 You just made my day!")
 
-    # NO
     with col2:
         if st.button("NO ❌"):
             st.session_state.dramatic = True
